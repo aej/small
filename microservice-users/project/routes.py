@@ -1,10 +1,13 @@
 from apistar import Include, Route
 from apistar.handlers import docs_urls, static_urls
 
-from .views import ping_pong
+from .views import list_users_view, create_user_view
 
 routes = [
-    Route('/', 'GET', ping_pong),
+
+    Route('/users', 'GET', list_users_view),
+    Route('/users', 'POST', create_user_view),
+
     Include('/docs', docs_urls),
     Include('/static', static_urls)
 ]

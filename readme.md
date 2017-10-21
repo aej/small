@@ -6,3 +6,9 @@ There will be the following microservices as part of this application:
 1. users - manage users and auth
 2. client - client-side react app
 3. small - application for managing user posts
+
+
+
+# TODO:
+
+- setup a gunicorn run script for the application and redefine the entrypoint
