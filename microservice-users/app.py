@@ -10,6 +10,7 @@ from project.config.base import config
 settings = config.from_object(os.environ.get('SETTINGS_CLASS', 'ProductionConfiguration'))
 
 
+
 app = App(
     routes=routes,
     settings=settings,

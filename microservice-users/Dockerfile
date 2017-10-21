@@ -1,6 +1,5 @@
 FROM python:3.6.2
 
-# -- Install Pipenv:
 RUN pip install pipenv --upgrade
 
 COPY Pipfile Pipfile
