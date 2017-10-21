@@ -6,8 +6,7 @@ from apistar import Response
 from apistar.backends.sqlalchemy_backend import Session
 
 from .models import User
-from .types import UserType, EmailType, UsernameType
-
+from .types import UserType, EmailType, UsernameType, IdType
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -37,3 +36,14 @@ def create_user_view(session: Session, user: UserType) -> Response:
     return Response(data, status=201)
 
 
+def detail_user_view(session: Session, user_id: IdType) -> Response:
+
+    user = session.query(User).get(user_id)
+
+    # data = dict(
+    #     id=user.pk,
+    #     username=user.username,
+    #     email=user.email
+    # )
+    data = str(user_id)
+    return Response(data, status=200)
