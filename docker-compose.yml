@@ -5,6 +5,10 @@ volumes:
 
 services:
 
+  #
+  # Database service
+  #
+
   postgres-users:
     image: postgres:9.6.3-alpine
     volumes:
@@ -12,6 +16,10 @@ services:
     environment:
       - POSTGRES_USER=postgres-users
       - POSTGRES_PASSWORD=UruQl8st
+
+  #
+  # application services
+  #
 
   users-service:
     container_name: users-service
@@ -22,3 +30,17 @@ services:
       - "8080:8080"
     links:
       - postgres-users
+    env_file:
+      - .env
+
+  frontend-service:
+    build: ./microservice-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./microservice-frontend:/app
+      - ./microservice-frontend/node_modules:/app/node_modules
+    env_file:
+      - .env
+    links:
+      - users-service

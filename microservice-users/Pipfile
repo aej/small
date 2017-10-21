@@ -9,6 +9,7 @@ apistar = "*"
 ipdb = "*"
 sqlalchemy = "*"
 "psycopg2" = "*"
+wsgicors = "*"
 
 
 [dev-packages]
