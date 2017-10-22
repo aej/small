@@ -18,9 +18,14 @@ class EmailType(typesystem.String):
     description = 'The email of the user'
 
 
+class DateType(typesystem.String):
+    format = 'date'
+
+
 class UserType(typesystem.Object):
     properties = {
         'id': IdType,
         'username': UsernameType,
-        'email': EmailType
+        'email': EmailType,
+        'created_at': DateType
     }

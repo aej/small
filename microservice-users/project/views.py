@@ -17,7 +17,7 @@ RESPONSE_OBJECT_TEMPLATE = dict(
 )
 
 def list_users_view(session: Session) -> typing.List[UserType]:
-    """List all the users on in the database."""
+    """List all the users in the database."""
     response_object = RESPONSE_OBJECT_TEMPLATE
     queryset = session.query(User).all()
     response_object['data'] = {}

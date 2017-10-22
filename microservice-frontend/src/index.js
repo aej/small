@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import UsersList from './components/UsersList';
+
 
 class App extends Component {
       constructor(){
@@ -9,16 +11,15 @@ class App extends Component {
             users: []
         }
       }
+
       componentDidMount() {
         this.getUsers();
       }
 
       getUsers() {
-        fetch(`${process.env.USERS_SERVICE_BASE_URL}/users`)
+        fetch('http://localhost:8080/users')
         .then(r => r.json())
-        .then(data => { this.setState({ users: data.data }) })
-
-        console.log(this.state)
+        .then(data => { this.setState({ users: data.data.users }) });
       }
 
       render(){
@@ -29,6 +30,7 @@ class App extends Component {
                         <br/>
                         <h1>All Users</h1>
                         <hr/><br/>
+                        <UsersList users={this.state.users} />
                       </div>
                     </div>
                   </div>
