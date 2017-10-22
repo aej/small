@@ -3,7 +3,7 @@
 if [ -n "$LOCAL_DEV" ];
 then
     echo "Starting frontend in development mode"
-    npm run start
+    yarn start
 else
     echo "Starting frontend in production mode"
     npm install -g http-server

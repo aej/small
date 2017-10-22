@@ -18,6 +18,17 @@ services:
       - POSTGRES_PASSWORD=UruQl8st
 
   #
+  # gateway service
+  #
+  gateway-service:
+    build: ./microservice-gateway
+    ports:
+      - "80:80"
+    links:
+      - users-service
+      - frontend-service
+
+  #
   # application services
   #
 
