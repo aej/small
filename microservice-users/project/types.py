@@ -22,10 +22,14 @@ class DateType(typesystem.String):
     format = 'date'
 
 
+class PasswordType(typesystem.String):
+    descriptions = 'The hashed user password'
+
 class UserType(typesystem.Object):
     properties = {
         'id': IdType,
         'username': UsernameType,
         'email': EmailType,
-        'created_at': DateType
+        'created_at': DateType,
+        'password': PasswordType
     }

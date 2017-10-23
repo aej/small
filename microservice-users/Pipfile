@@ -10,7 +10,8 @@ ipdb = "*"
 sqlalchemy = "*"
 "psycopg2" = "*"
 wsgicors = "*"
-
+bcrypt = "*"
+"apistar-jwt" = "*"
 
 [dev-packages]
 
