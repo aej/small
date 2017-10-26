@@ -41,6 +41,8 @@ def create_user_view(session: Session, user: UserType) -> Response:
     password = user.get('password').encode('utf8')
 
     try:
+        print('@@@@@')
+        print(username, email)
         user = session.query(User).filter_by(or_(username=username, email=email)).first()
         if not user:
             user = User(username=username,
@@ -93,7 +95,6 @@ def register_user_view(session: Session, settings: Settings, user: UserType) -> 
     username = user.get('username')
     email = user.get('email')
     password = user.get('password').encode('utf8')
-
     try:
         user = session.query(User).filter(
             or_(User.username == username, User.email == email)
@@ -113,7 +114,8 @@ def register_user_view(session: Session, settings: Settings, user: UserType) -> 
             response_object['message'] = 'Successfully registered.'
             response_object['auth_token'] = new_user_jwt_token
 
-            return Response(response_object, status=201)
+            # return Response(response_object, status=201)
+            return Response({'token': new_user_jwt_token}, status=201)
         else:
             response_object['status'] = 'error'
             response_object['message'] = 'Sorry, that user already exists'
@@ -121,7 +123,6 @@ def register_user_view(session: Session, settings: Settings, user: UserType) -> 
             return Response(response_object, status=400)
 
     except (exc.IntegrityError, ValueError) as e:
-        session.rollback()
         response_object['status'] = 'error'
         response_object['message'] = 'Invalid payload'
 
@@ -136,7 +137,7 @@ def login_user_view(session: Session, settings: Settings, user: UserType) -> Res
     password = user.get('password').encode('utf-8')
 
     try:
-        user = session.query(User).filter(email == email).first()
+        user = session.query(User).filter(User.email == email).first()
 
         if user and bcrypt.checkpw(password, user.password.encode('utf-8')):
             payload = dict(email=email)
@@ -154,7 +155,6 @@ def login_user_view(session: Session, settings: Settings, user: UserType) -> Res
             return Response(response_object, status=404)
 
     except Exception as e:
-        print(e)
         response_object['status'] = 'eerror'
         response_object['message'] = 'Try again.'
 
@@ -163,11 +163,36 @@ def login_user_view(session: Session, settings: Settings, user: UserType) -> Res
 
 @annotate(authentication=[JWTAuthentication()])
 def logout_user_view(auth: Auth):
-    import ipdb; ipdb.set_trace()
-    user = auth.user
-    token = auth.token
+    response_object = RESPONSE_OBJECT_TEMPLATE
 
-    auth.is_authenticated
+    if auth.is_authenticated():
+        response_object['message'] = 'Successfully logged out.'
 
-    auth.get_user_id()
-    auth.get_display_name()
+        return Response(response_object, 200)
+
+    response_object['status'] = 'error'
+    return Response(response_object, 401)
+
+
+@annotate(authentication=[JWTAuthentication()])
+def user_status_view(session: Session, auth: Auth):
+    response_object = RESPONSE_OBJECT_TEMPLATE
+
+    if auth.is_authenticated():
+        email = auth.user['name']
+        user = session.query(User).filter(User.email == email).first()
+
+        response_object['data'] = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'active': user.active,
+            'created_at': user.created_at.strftime(format='%Y-%m-%d %H:%M')
+        }
+        return Response(response_object, 200)
+    else:
+        response_object['status'] = 'error'
+        response_object['message'] = 'Please provide a valid auth token.'
+        return Response(response_object, 401)
+
+

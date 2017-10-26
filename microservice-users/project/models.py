@@ -24,3 +24,6 @@ class User(Base):
         self.email = email
         self.created_at = datetime.utcnow()
         self.password = bcrypt.hashpw(password, bcrypt.gensalt(14)).decode()
+
+    def __str__(self):
+        return f'<User: {self.username}>'

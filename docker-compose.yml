@@ -8,7 +8,6 @@ services:
   #
   # Database service
   #
-
   postgres-users:
     image: postgres:9.6.3-alpine
     volumes:
@@ -31,7 +30,6 @@ services:
   #
   # application services
   #
-
   users-service:
     container_name: users-service
     build: ./microservice-users

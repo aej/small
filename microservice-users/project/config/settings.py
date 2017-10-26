@@ -10,7 +10,9 @@ class BaseConfiguration:
     }
 
     JWT = {
-        'SECRET': os.environ.get('JWT_SECRET')
+        'SECRET': os.environ.get('JWT_SECRET'),
+        'USERNAME': 'email',
+        'ID': 'id',
     }
 
 
