@@ -22,4 +22,4 @@ class ProductionConfiguration(BaseConfiguration):
 
 
 class LocalConfiguration(BaseConfiguration):
-    pass
+    DEBUG = True
