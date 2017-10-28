@@ -41,8 +41,6 @@ def create_user_view(session: Session, user: UserType) -> Response:
     password = user.get('password').encode('utf8')
 
     try:
-        print('@@@@@')
-        print(username, email)
         user = session.query(User).filter_by(or_(username=username, email=email)).first()
         if not user:
             user = User(username=username,
@@ -115,7 +113,7 @@ def register_user_view(session: Session, settings: Settings, user: UserType) -> 
             response_object['auth_token'] = new_user_jwt_token
 
             # return Response(response_object, status=201)
-            return Response({'token': new_user_jwt_token}, status=201)
+            return Response({'auth_token': new_user_jwt_token}, status=201)
         else:
             response_object['status'] = 'error'
             response_object['message'] = 'Sorry, that user already exists'
@@ -155,7 +153,7 @@ def login_user_view(session: Session, settings: Settings, user: UserType) -> Res
             return Response(response_object, status=404)
 
     except Exception as e:
-        response_object['status'] = 'eerror'
+        response_object['status'] = 'error'
         response_object['message'] = 'Try again.'
 
         return Response(response_object, status=500)

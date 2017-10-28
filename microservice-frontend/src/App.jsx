@@ -62,7 +62,7 @@ class App extends Component {
           email: '',
           isAuthenticated: true,
         });
-        window.localStorage.setItem('authToken', res.token.toString());
+        window.localStorage.setItem('authToken', res.auth_token.toString());
         this.getUsers();
       })
       .catch((err) => { console.log(err); })
@@ -89,31 +89,6 @@ class App extends Component {
     .then(data => { this.setState({ users: data.data.users }) });
   }
 
-  addUser(event) {
-    event.preventDefault();
-
-    const data = {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password
-    }
-
-    fetch('http://localhost:8080/users', {
-        method: 'post',
-        body: JSON.stringify(data),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-    .then((res) => {
-        this.getUsers();
-        this.setState({ username: '', email: '', password: '' })
-
-    })
-    .catch((err) => { console.log(err); })
-  }
-
   handleChange(event) {
     const obj = {};
     obj[event.target.name] = event.target.value;
@@ -132,12 +107,21 @@ class App extends Component {
                   <div className="col-md-8">
                     <br/>
                     <Switch>
+
                         <Route exact path='/' render={() => (
                             <div>
                                 <UsersList users={this.state.users} />
                             </div>
                         )} />
+
                         <Route exact path='/about' component={About} />
+
+                        <Route exact path='/status' render={() => (
+                            <UserStatus
+                                isAuthenticated={this.state.isAuthenticated}
+                            />
+                        )} />
+
                         <Route exact path='/register' render={() => (
                             <Form
                                 formType={'Register'}
@@ -165,7 +149,6 @@ class App extends Component {
                                 />
                         )}/>
 
-                        <Route exact path='/status' component={UserStatus} />
 
                     </Switch>
                   </div>
