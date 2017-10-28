@@ -11,6 +11,14 @@ There will be the following microservices as part of this application:
 4. gateway - a reverse proxy for the apis
 
 
+# Tools
+
+* APIStar
+* React
+* Nginx
+* Docker
+
 # TODO:
 
 - setup a gunicorn run script for the application and redefine the entrypoint
+- Add an nginx default 500 page

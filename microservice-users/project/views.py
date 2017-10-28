@@ -11,7 +11,7 @@ from apistar_jwt.authentication import JWTAuthentication
 from sqlalchemy import exc, or_
 
 from .models import User
-from .types import UserType, EmailType, UsernameType, IdType
+from .types import UserType, IdType
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
