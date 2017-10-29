@@ -13,4 +13,4 @@ WORKDIR /app
 
 EXPOSE 8080
 
-CMD [ "pipenv", "run", "apistar", "run", "--host", "0.0.0.0", "--port", "8080" ]
+CMD [ "pipenv", "run", "apistar", "run", "--host", "0.0.0.0", "--port", "8070" ]

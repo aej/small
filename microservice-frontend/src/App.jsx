@@ -45,7 +45,7 @@ class App extends Component {
         password: this.state.formData.password
       }
     }
-     const url = 'http://localhost:8080/auth/' + formType
+     const url = usersAPIUrl + '/auth/' + formType
      fetch(url, {
        method: 'post',
        body: JSON.stringify(data),

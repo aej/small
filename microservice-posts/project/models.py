@@ -1,32 +1,7 @@
-from datetime import datetime
-
-import bcrypt
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
 
 Base = declarative_base()
-
-
-class User(Base):
-
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String(128), nullable=False, unique=True)
-    email = Column(String(128), nullable=False, unique=True)
-    password = Column(String(255), nullable=False)
-    active = Column(Boolean(), default=False, nullable=False)
-    admin = Column(Boolean(), default=False, nullable=False)
-    created_at = Column(DateTime, nullable=False)
-
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.created_at = datetime.utcnow()
-        self.password = bcrypt.hashpw(password, bcrypt.gensalt(14)).decode()
-
-    def __str__(self):
-        return f'<User: {self.username}>'
 
 
 class Post(Base):
@@ -34,7 +9,7 @@ class Post(Base):
     __tablename__ = 'posts'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    author = F
-    title = Column()
-    content = Column()
+    author_id = Column(Integer, nullable=False, unique=True)
+    title = Column(String(255), nullable=False, unique=False)
+    content = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False)

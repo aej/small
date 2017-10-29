@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 def list_posts_view():
     pass
 
-def detail_posts_view():
+def detail_posts_view(post_id: int):
     pass
 
 def create_posts_view():

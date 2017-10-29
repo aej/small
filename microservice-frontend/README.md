@@ -37,7 +37,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
-  - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
+  - [Adding Development Environment Variables In `posts.env`](#adding-development-environment-variables-in-env)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
@@ -852,7 +852,7 @@ When you load the app in the browser and inspect the `<input>`, you will see its
 
 The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
 value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
-a `.env` file. Both of these ways are described in the next few sections.
+a `posts.env` file. Both of these ways are described in the next few sections.
 
 Having access to the `NODE_ENV` is also useful for performing actions conditionally:
 
@@ -898,32 +898,32 @@ set REACT_APP_SECRET_CODE=abcdef&&npm start
 REACT_APP_SECRET_CODE=abcdef npm start
 ```
 
-### Adding Development Environment Variables In `.env`
+### Adding Development Environment Variables In `posts.env`
 
 >Note: this feature is available with `react-scripts@0.5.0` and higher.
 
-To define permanent environment variables, create a file called `.env` in the root of your project:
+To define permanent environment variables, create a file called `posts.env` in the root of your project:
 
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
 
-`.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
+`posts.env` files **should be** checked into source control (with the exclusion of `posts.env*.local`).
 
-#### What other `.env` files are can be used?
+#### What other `posts.env` files are can be used?
 
 >Note: this feature is **available with `react-scripts@1.0.0` and higher**.
 
-* `.env`: Default.
-* `.env.local`: Local overrides. **This file is loaded for all environments except test.**
-* `.env.development`, `.env.test`, `.env.production`: Environment-specific settings.
-* `.env.development.local`, `.env.test.local`, `.env.production.local`: Local overrides of environment-specific settings.
+* `posts.env`: Default.
+* `posts.env.local`: Local overrides. **This file is loaded for all environments except test.**
+* `posts.env.development`, `posts.env.test`, `posts.env.production`: Environment-specific settings.
+* `posts.env.development.local`, `posts.env.test.local`, `posts.env.production.local`: Local overrides of environment-specific settings.
 
 Files on the left have more priority than files on the right:
 
-* `npm start`: `.env.development.local`, `.env.development`, `.env.local`, `.env`
-* `npm run build`: `.env.production.local`, `.env.production`, `.env.local`, `.env`
-* `npm test`: `.env.test.local`, `.env.test`, `.env` (note `.env.local` is missing)
+* `npm start`: `posts.env.development.local`, `posts.env.development`, `posts.env.local`, `posts.env`
+* `npm run build`: `posts.env.production.local`, `posts.env.production`, `posts.env.local`, `posts.env`
+* `npm test`: `posts.env.test.local`, `posts.env.test`, `posts.env` (note `posts.env.local` is missing)
 
 These variables will act as the defaults if the machine does not explicitly set them.<br>
 Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
@@ -1008,7 +1008,7 @@ This shouldn’t affect you when developing on `localhost`, but if you develop r
 
 >Invalid Host header
 
-To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
+To work around it, you can specify your public development host in a file called `posts.env.development` in the root of your project:
 
 ```
 HOST=mypublicdevhost.com
@@ -1016,7 +1016,7 @@ HOST=mypublicdevhost.com
 
 If you restart the development server now and load the app from the specified host, it should work.
 
-If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
+If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `posts.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
 
 ```
 # NOTE: THIS IS DANGEROUS!
@@ -2082,7 +2082,7 @@ If this doesn’t happen, try one of the following workarounds:
 * Some editors like Vim and IntelliJ have a “safe write” feature that currently breaks the watcher. You will need to disable it. Follow the instructions in [“Adjusting Your Text Editor”](https://webpack.js.org/guides/development/#adjusting-your-text-editor).
 * If your project path contains parentheses, try moving the project to a path without them. This is caused by a [Webpack watcher bug](https://github.com/webpack/watchpack/issues/42).
 * On Linux and macOS, you might need to [tweak system settings](https://webpack.github.io/docs/troubleshooting.html#not-enough-watchers) to allow more watchers.
-* If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, create an `.env` file in your project directory if it doesn’t exist, and add `CHOKIDAR_USEPOLLING=true` to it. This ensures that the next time you run `npm start`, the watcher uses the polling mode, as necessary inside a VM.
+* If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, create an `posts.env` file in your project directory if it doesn’t exist, and add `CHOKIDAR_USEPOLLING=true` to it. This ensures that the next time you run `npm start`, the watcher uses the polling mode, as necessary inside a VM.
 
 If none of these solutions help please leave a comment [in this thread](https://github.com/facebookincubator/create-react-app/issues/659).
 
