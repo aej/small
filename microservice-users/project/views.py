@@ -72,17 +72,20 @@ def detail_user_view(session: Session, user_id: IdType) -> Response:
     """Get details about a single user."""
     user = session.query(User).get(user_id)
     response_object = RESPONSE_OBJECT_TEMPLATE
+
     if not user:
         response_object['status'] = 'fail'
         response_object['message'] = 'User does not exist'
-        return Response(status=204)
+        status_code = 204
     else:
         response_object['data'] = dict(
             id=user.id,
             username=user.username,
             email=user.email
         )
-        return Response(response_object, status=200)
+        status_code = 200
+
+    return Response(response_object, status=status_code)
 
 
 def register_user_view(session: Session, settings: Settings, user: UserType) -> Response:

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import constantsClass from './../config/Constants';
 
 class UserStatus extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class UserStatus extends Component {
   }
 
   getUserStatus(event) {
-    const url = 'http://localhost:8080/auth/status'
+    const url = constantsClass + '/status'
     fetch(url, {
       method: 'get',
       headers: {

@@ -8,7 +8,7 @@ import NavBar from './components/Navbar';
 import Logout from './components/Logout';
 import UserStatus from './components/UserStatus';
 
-const usersAPIUrl = process.env.REACT_APP_USERS_SERVICE_BASE_URL;
+import constantsClass from './config/Constants';
 
 class App extends Component {
 
@@ -45,7 +45,7 @@ class App extends Component {
         password: this.state.formData.password
       }
     }
-     const url = usersAPIUrl + '/auth/' + formType
+     const url = constantsClass.usersAPIUrl + '/auth/' + formType
      fetch(url, {
        method: 'post',
        body: JSON.stringify(data),
@@ -84,7 +84,8 @@ class App extends Component {
   }
 
   getUsers() {
-    fetch(usersAPIUrl + '/users')
+    console.log('Fetching resource from ', constantsClass.usersAPIUrl + '/users')
+    fetch(constantsClass.usersAPIUrl + '/users')
     .then(r => r.json())
     .then(data => { this.setState({ users: data.data.users }) });
   }

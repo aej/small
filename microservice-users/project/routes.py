@@ -17,6 +17,6 @@ routes = [
     Route('/auth/status', 'GET', user_status_view),
 
 
-    Include('/docs', docs_urls),
+    Include('/users_docs', docs_urls),
     Include('/users_static', static_urls)
 ]
