@@ -1,0 +1,174 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Small - Users Service",
+		"_postman_id": "ad3f60a8-fe37-c711-c585-be9db2c1162d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List all users",
+			"request": {
+				"url": "localhost:8080/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User",
+			"request": {
+				"url": "localhost:8080/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"tomj\",\n\t\"email\": \"tomj@gmail.com\",\n\t\"password\": \"password12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single user by id",
+			"request": {
+				"url": "localhost:8080/users/9",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register User View",
+			"request": {
+				"url": "localhost:8080/auth/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"username\": \"yyy\",\n\t\"email\": \"yyy@gmail.com\",\n\t\"password\": \"password12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login User View",
+			"request": {
+				"url": "localhost:8080/auth/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvbTkxQGdtYWlsLmNvbSJ9.gUIqpdo_VQKm2c1lwEhLs4UnCA2iMT37IJSXx5HsUtA",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"email\": \"tom91@gmail.com\",\n\t\"password\": \"password12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout user view",
+			"request": {
+				"url": "localhost:8080/auth/logout",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvbTkxQGdtYWlsLmNvbSJ9.gUIqpdo_VQKm2c1lwEhLs4UnCA2iMT37IJSXx5HsUtA",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User status view",
+			"request": {
+				"url": "localhost:8080/auth/status",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvbTkxQGdtYWlsLmNvbSJ9.gUIqpdo_VQKm2c1lwEhLs4UnCA2iMT37IJSXx5HsUtA",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List all posts",
+			"request": {
+				"url": "localhost:8070/posts",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single post by id",
+			"request": {
+				"url": "localhost:8070/posts/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Post",
+			"request": {
+				"url": "localhost:8070/posts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"this is the post title.\",\n\t\"author_id\": \"1\",\n\t\"content\": \"this is the post content.\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
