@@ -14,59 +14,40 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-RESPONSE_OBJECT_TEMPLATE = dict(
-    status='success'
-)
-
-
 def list_posts_view(session: Session) -> typing.List[PostType]:
-    response_object = RESPONSE_OBJECT_TEMPLATE
-    # TODO: order by created alt
+    # TODO: order by created at
     queryset = session.query(Post).all()
-
-    response_object['data'] = {}
-    response_object['data']['posts'] = [PostType(record) for record in queryset]
-
-    return Response(response_object, status=200)
+    posts = [PostType(record) for record in queryset]
+    return Response({'data': posts}, status=200)
 
 
-def detail_post_view(session: Session, post_id: IdType) -> Response:
-    response_object = RESPONSE_OBJECT_TEMPLATE
+def detail_post_view(session: Session, post_id: IdType) -> typing.List[PostType]:
     post = session.query(Post).get(post_id)
 
     if not post:
-        response_object['status'] = 'fail'
-        response_object['message'] = 'Post does not exist'
-        status_code = 204
+        return Response({'message': 'Post does not exist'}, status=204)
     else:
-        response_object['data']  = dict(
+        post_data  = dict(
             id=post.id,
             author_id=post.author_id,
             title=post.title,
             content=post.content,
             created_at=post.created_at
         )
-        status_code = 200
-    return Response(response_object, status=status_code)
+        return Response({'data': post_data}, status=200)
 
 
 def create_post_view(session: Session, settings: Settings, post: PostType) -> Response:
-    response_object = RESPONSE_OBJECT_TEMPLATE
-
-    author_id = post.author_id
-    title = post.title
-    content = post.content
+    author_id = post.get('author_id')
+    title = post.get('title')
+    content = post.get('content')
 
     try:
         post = Post(author_id=author_id, title=title, content=content)
         session.add(post)
         session.flush()
 
-        response_object['message'] = 'New post created'
-        return Response(response_object, status=201)
+        return Response({'message': 'Post created.'}, status=201)
 
-    except (exc.IntegrityError, ValueError) as e:
-        response_object['status'] = 'error'
-        response_object['message'] = 'Invalid payload'
-
-        return Response(response_object, 400)
+    except (exc.IntegrityError, ValueError):
+        return Response({'message': 'Invalid payload'}, 400)

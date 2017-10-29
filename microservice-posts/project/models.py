@@ -11,10 +11,13 @@ class Post(Base):
     __tablename__ = 'posts'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    author_id = Column(Integer, nullable=False, unique=True)
+    author_id = Column(Integer, nullable=False, unique=False)
     title = Column(String(255), nullable=False, unique=False)
     content = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False)
 
-    def __init__(self):
+    def __init__(self, author_id, title, content):
+        self.author_id = author_id
+        self.title = title
+        self.content = content
         self.created_at = datetime.utcnow()
