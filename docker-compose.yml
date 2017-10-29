@@ -9,20 +9,20 @@ services:
   #
   # Database service
   #
-  postgres-users:
+  users-postgres:
     image: postgres:9.6.3-alpine
     volumes:
       - postgres_users_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres-users
+      - POSTGRES_USER=users-postgres
       - POSTGRES_PASSWORD=UruQl8st
 
-  postgres-posts:
+  posts-postgres:
     image: postgres:9.6.3-alpine
     volumes:
       - postgres_posts_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres-posts
+      - POSTGRES_USER=posts-postgres
       - POSTGRES_PASSWORD=UruQl8st
 
   #
@@ -34,6 +34,7 @@ services:
       - "80:80"
     links:
       - users-service
+      - posts-service
       - frontend-service
 
   #
@@ -47,7 +48,7 @@ services:
     ports:
       - "8080:8080"
     links:
-      - postgres-users
+      - users-postgres
     env_file:
       - users.env
 
@@ -59,7 +60,7 @@ services:
     ports:
       - "8070:8070"
     links:
-      - postgres-posts
+      - posts-postgres
     env_file:
       - posts.env
 
