@@ -15,3 +15,12 @@
 - logout
 - user status
 
+
+
+### Migrations
+
+To run the inital migration use
+
+```bash
+pipenv run apistar create_tables
+```

@@ -41,7 +41,7 @@ def create_user_view(session: Session, user: UserType) -> Response:
     password = user.get('password').encode('utf8')
 
     try:
-        user = session.query(User).filter_by(or_(username=username, email=email)).first()
+        user = session.query(User).filter(or_(User.username == username, User.email == email)).first()
         if not user:
             user = User(username=username,
                         email=email,
@@ -51,7 +51,6 @@ def create_user_view(session: Session, user: UserType) -> Response:
 
             # generate a new auth token
             response_object['message'] = 'Successfully registered.'
-            response_object['auth_token'] = 'token here'
 
             return Response(response_object, status=201)
         else:
@@ -83,9 +82,8 @@ def detail_user_view(session: Session, user_id: IdType) -> Response:
             username=user.username,
             email=user.email
         )
-        status_code = 200
 
-    return Response(response_object, status=status_code)
+    return response_object
 
 
 def register_user_view(session: Session, settings: Settings, user: UserType) -> Response:
@@ -148,7 +146,7 @@ def login_user_view(session: Session, settings: Settings, user: UserType) -> Res
                 response_object['status'] = 'success'
                 response_object['message'] = 'Successfully logged in!'
                 response_object['auth_token'] = auth_token
-                return Response(response_object, 200)
+                return response_object
         else:
             response_object['status'] = 'error'
             response_object['message'] = 'User does not exist'
@@ -169,7 +167,7 @@ def logout_user_view(auth: Auth):
     if auth.is_authenticated():
         response_object['message'] = 'Successfully logged out.'
 
-        return Response(response_object, 200)
+        return response_object
 
     response_object['status'] = 'error'
     return Response(response_object, 401)
@@ -190,7 +188,7 @@ def user_status_view(session: Session, auth: Auth):
             'active': user.active,
             'created_at': user.created_at.strftime(format='%Y-%m-%d %H:%M')
         }
-        return Response(response_object, 200)
+        return response_object
     else:
         response_object['status'] = 'error'
         response_object['message'] = 'Please provide a valid auth token.'

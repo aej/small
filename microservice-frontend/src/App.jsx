@@ -7,6 +7,7 @@ import Form from './components/Form';
 import NavBar from './components/Navbar';
 import Logout from './components/Logout';
 import UserStatus from './components/UserStatus';
+import Home from './components/Home';
 
 import constantsClass from './config/Constants';
 
@@ -16,6 +17,7 @@ class App extends Component {
     super()
     this.state = {
         users: [],
+        posts: [],
         username: '',
         email: '',
         title: 'Small',
@@ -84,7 +86,6 @@ class App extends Component {
   }
 
   getUsers() {
-    console.log('Fetching resource from ', constantsClass.usersAPIUrl + '/users')
     fetch(constantsClass.usersAPIUrl + '/users')
     .then(r => r.json())
     .then(data => { this.setState({ users: data.data.users }) });
@@ -110,9 +111,7 @@ class App extends Component {
                     <Switch>
 
                         <Route exact path='/' render={() => (
-                            <div>
-                               Homepage tbd
-                            </div>
+                          <Home />
                         )} />
 
                         <Route exact path='/about' component={About} />
@@ -124,9 +123,9 @@ class App extends Component {
                         )} />
 
                         <Route exact path='/status' render={() => (
-                            <UserStatus
-                                isAuthenticated={this.state.isAuthenticated}
-                            />
+                           <UserStatus
+                             isAuthenticated={this.state.isAuthenticated}
+                           />
                         )} />
 
                         <Route exact path='/register' render={() => (
