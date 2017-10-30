@@ -15,13 +15,14 @@ logger = logging.getLogger(__name__)
 
 
 def list_posts_view(session: Session) -> typing.List[PostType]:
-    # TODO: order by created at
-    queryset = session.query(Post).all()
+    """List all the posts on the platform."""
+    queryset = session.query(Post).order_by(Post.created_at.desc()).all()
     posts = [PostType(record) for record in queryset]
-    return Response({'data': posts}, status=200)
+    return {'data': posts}
 
 
 def detail_post_view(session: Session, post_id: IdType) -> typing.List[PostType]:
+    """Get a single post by ID."""
     post = session.query(Post).get(post_id)
 
     if not post:
@@ -32,12 +33,16 @@ def detail_post_view(session: Session, post_id: IdType) -> typing.List[PostType]
             author_id=post.author_id,
             title=post.title,
             content=post.content,
-            created_at=post.created_at
+            created_at=post.created_at.strftime(format='%Y-%m-%d %H:%M'),
         )
-        return Response({'data': post_data}, status=200)
+        return {'data': post_data}
 
 
-def create_post_view(session: Session, settings: Settings, post: PostType) -> Response:
+def create_post_view(session: Session, post: PostType) -> Response:
+    """Create a new post"""
+
+    # TODO: Make this view only accessable via JWT authentication and make sure that a user cannot create a post for
+    # someone else (check that the ID of the authenticated user is the same as that for the author
     author_id = post.get('author_id')
     title = post.get('title')
     content = post.get('content')
@@ -48,6 +53,26 @@ def create_post_view(session: Session, settings: Settings, post: PostType) -> Re
         session.flush()
 
         return Response({'message': 'Post created.'}, status=201)
+
+    except (exc.IntegrityError, ValueError):
+        return Response({'message': 'Invalid payload'}, 400)
+
+
+def delete_post_view(session: Session, post_id: IdType) -> Response:
+    """Delete a post"""
+
+    # TODO: make this view only accessible by admin or the author id of the post
+
+    post = session.query(Post).get(post_id)
+
+    if not post:
+        return Response({'message': 'Post does not exist'})
+
+    try:
+        session.delete(post)
+        session.flush()
+
+        return {'message': 'Post deleted.'}
 
     except (exc.IntegrityError, ValueError):
         return Response({'message': 'Invalid payload'}, 400)

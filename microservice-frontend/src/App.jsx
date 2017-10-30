@@ -111,11 +111,17 @@ class App extends Component {
 
                         <Route exact path='/' render={() => (
                             <div>
-                                <UsersList users={this.state.users} />
+                               Homepage tbd
                             </div>
                         )} />
 
                         <Route exact path='/about' component={About} />
+
+                        <Route exact path='/users' render={() => (
+                            <div>
+                                <UsersList users={this.state.users} />
+                            </div>
+                        )} />
 
                         <Route exact path='/status' render={() => (
                             <UserStatus
