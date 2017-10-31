@@ -8,6 +8,7 @@ import NavBar from './components/Navbar';
 import Logout from './components/Logout';
 import UserStatus from './components/UserStatus';
 import Home from './components/Home';
+import NewPost from './components/NewPost';
 
 import constantsClass from './config/Constants';
 
@@ -26,8 +27,22 @@ class App extends Component {
             email: '',
             password: ''
         },
-        isAuthenticated: false
+        isAuthenticated: false,
+        newPostFormData: {
+            title: '',
+            content: ''
+        }
     }
+  }
+
+  clearLocalStorage() {
+      if(!this.state.isAuthenticated) {
+        window.localStorage.clear();
+      }
+   }
+  handleNewPostFormSubmit(event){
+    event.preventDefault;
+    
   }
 
   handleUserFormSubmit(event){
@@ -77,7 +92,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.clearLocalStorage();
     this.getUsers();
+    this.getPosts();
   }
 
   logoutUser() {
@@ -89,6 +106,12 @@ class App extends Component {
     fetch(constantsClass.usersAPIUrl + '/users')
     .then(r => r.json())
     .then(data => { this.setState({ users: data.data.users }) });
+  }
+
+  getPosts() {
+    fetch(constantsClass.postsAPIUrl + '/posts')
+      .then(r => r.json())
+      .then(data => { this.setState({ posts: data.data }) });
   }
 
   handleChange(event) {
@@ -111,7 +134,7 @@ class App extends Component {
                     <Switch>
 
                         <Route exact path='/' render={() => (
-                          <Home />
+                          <Home posts={this.state.posts} />
                         )} />
 
                         <Route exact path='/about' component={About} />
@@ -124,6 +147,13 @@ class App extends Component {
 
                         <Route exact path='/status' render={() => (
                            <UserStatus
+                             isAuthenticated={this.state.isAuthenticated}
+                           />
+                        )} />
+
+                        <Route exact path='/new' render={() => (
+                           <NewPost
+                             handleNewPostFormSubmit={this.handleNewPostFormSubmit.bind(this)}
                              isAuthenticated={this.state.isAuthenticated}
                            />
                         )} />

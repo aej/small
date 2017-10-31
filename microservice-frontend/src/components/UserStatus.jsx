@@ -21,7 +21,7 @@ class UserStatus extends Component {
   }
 
   getUserStatus(event) {
-    const url = constantsClass + '/status'
+    const url = constantsClass.usersAPIUrl + '/status'
     fetch(url, {
       method: 'get',
       headers: {
@@ -30,13 +30,14 @@ class UserStatus extends Component {
       }
     })
     .then((res) => res.json() )
-    .then((res) => {
+    .then((response_json) => {
+        console.log(response_json);
         this.setState({
-          id: res.data.id,
-          username: res.data.username,
-          email: res.data.email,
-          created_at: res.data.created_at,
-          })
+          id: response_json.data.id,
+          username: response_json.data.username,
+          email: response_json.data.email,
+          created_at: response_json.data.created_at,
+        });
     })
     .catch((err) => { console.log(err); })
   }

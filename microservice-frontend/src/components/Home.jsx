@@ -1,32 +1,21 @@
-import React, { Component } from 'react'
-import constantsClass from './../config/Constants';
+import React from 'react';
+import { Panel } from 'react-bootstrap';
 
-class Home extends Component {
-  componentDidMount() {
-    this.getPosts();
-  }
-  getPosts() {
-    fetch(constantsClass.postsAPIUrl + '/posts')
-      .then(r => r.json())
-      .then(data => { this.setState({ posts: data.data })});
-  }
-  render() {
+
+const Home = (props) => {
     return (
       <div>
         {
-          this.state.posts.map((post) => {
-            return (
-              <div>
-                <h1>{post.title}</h1>
-                <p>{post.content}</p>
-                <small>{post.created_at}</small>
-              </div>
-            )
-          })
+            props.posts.map((post) => {
+                return (
+                    <Panel key={post.id} header={post.title} bsStyle="primary">
+                        {post.content}                            
+                    </Panel>
+                )
+            })
         }
       </div>
     )
-  }
-}
+};
 
-export default Home
+export default Home;

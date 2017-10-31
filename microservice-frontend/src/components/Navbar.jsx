@@ -6,8 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 const NavBar = (props) => (
 
 
-    <Navbar inverse collapseOnSelect>
-
+    <Navbar collapseOnSelect>
 
         <Navbar.Header>
             <Navbar.Brand>
@@ -33,6 +32,12 @@ const NavBar = (props) => (
                 {props.isAuthenticated &&
                     <LinkContainer to="/status">
                       <NavItem eventKey={4}>User Status</NavItem>
+                    </LinkContainer>
+                }
+
+                {props.isAuthenticated &&
+                    <LinkContainer to="/new">
+                      <NavItem eventKey={4}>New Post</NavItem>
                     </LinkContainer>
                 }
             </Nav>
