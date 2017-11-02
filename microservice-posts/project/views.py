@@ -3,7 +3,6 @@ import typing
 
 from apistar import Response
 from apistar.backends.sqlalchemy_backend import Session
-from apistar.types import Settings
 from sqlalchemy import exc
 
 from .types import PostType, IdType
@@ -28,7 +27,7 @@ def detail_post_view(session: Session, post_id: IdType) -> typing.List[PostType]
     if not post:
         return Response({'message': 'Post does not exist'}, status=204)
     else:
-        post_data  = dict(
+        post_data = dict(
             id=post.id,
             author_id=post.author_id,
             title=post.title,
@@ -46,7 +45,6 @@ def create_post_view(session: Session, post: PostType) -> Response:
     author_id = post.get('author_id')
     title = post.get('title')
     content = post.get('content')
-
     try:
         post = Post(author_id=author_id, title=title, content=content)
         session.add(post)
