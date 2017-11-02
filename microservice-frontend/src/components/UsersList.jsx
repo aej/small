@@ -8,10 +8,12 @@ const UsersList = (props) => {
         <hr/><br/>
         <Table striped bordered condensed hover>
             <thead>
-                <th>User ID</th>
-                <th>Email</th>
-                <th>Username</th>
-                <th>Created at</th>
+                <tr>
+                    <td>User ID</td>
+                    <td>Email</td>
+                    <td>Username</td>
+                    <td>Created at</td>
+                </tr>
             </thead>
             <tbody>
                 {

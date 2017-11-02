@@ -6,7 +6,6 @@ import About from './components/About';
 import Form from './components/Form';
 import NavBar from './components/Navbar';
 import Logout from './components/Logout';
-import UserStatus from './components/UserStatus';
 import Home from './components/Home';
 import NewPost from './components/NewPost';
 
@@ -28,10 +27,6 @@ class App extends Component {
             password: ''
         },
         isAuthenticated: false,
-        newPostFormData: {
-            title: '',
-            content: ''
-        }
     }
   }
 
@@ -39,13 +34,36 @@ class App extends Component {
       if(!this.state.isAuthenticated) {
         window.localStorage.clear();
       }
-   }
-  handleNewPostFormSubmit(event){
-    event.preventDefault;
-    
   }
 
-  handleUserFormSubmit(event){
+  handleNewPostFormSubmit(event){
+    event.preventDefault();
+    const url = constantsClass.postsAPIUrl + '/posts'
+    let data;
+    data = {
+        title: this.state.post_title,
+        content: this.state.post_content,
+        author_id: this.state.current_user.id
+    };
+    fetch(url, {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.authToken}`
+        }
+    })
+    .then(r => {
+        if(r.ok) {
+            this.getPosts();
+            window.location.reload();
+        }
+    })
+    .catch((err) => { console.log(err); });
+  }
+
+  handleUserFormSubmit(event) {
     event.preventDefault();
     const formType = window.location.href.split('/').reverse()[0];
     let data;
@@ -71,7 +89,7 @@ class App extends Component {
          'Content-Type': 'application/json'
        }
       })
-      .then((res) => res.json() )
+      .then((res) => res.json())
       .then((res) => {
         this.setState({
           formData: {username: '', email: '', password: ''},
@@ -81,6 +99,7 @@ class App extends Component {
         });
         window.localStorage.setItem('authToken', res.auth_token.toString());
         this.getUsers();
+        this.getUserStatus();
       })
       .catch((err) => { console.log(err); })
   }
@@ -120,6 +139,23 @@ class App extends Component {
     this.setState(obj);
   }
 
+  getUserStatus(event) {
+    const url = constantsClass.usersAPIUrl + '/auth/status'
+    console.log('in get user status method requesting url: ', url)
+    fetch(url, {
+      method: 'get',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.authToken}`
+      }
+    })
+    .then(res => res.json())
+    .then((data) => { 
+        this.setState({ current_user: data.data });
+
+    })
+    .catch((err) => { console.log(err); })
+  }
+
   render(){
       return (
         <div>
@@ -145,15 +181,10 @@ class App extends Component {
                             </div>
                         )} />
 
-                        <Route exact path='/status' render={() => (
-                           <UserStatus
-                             isAuthenticated={this.state.isAuthenticated}
-                           />
-                        )} />
-
                         <Route exact path='/new' render={() => (
                            <NewPost
                              handleNewPostFormSubmit={this.handleNewPostFormSubmit.bind(this)}
+                             handleFormChange={this.handleFormChange.bind(this)}
                              isAuthenticated={this.state.isAuthenticated}
                            />
                         )} />

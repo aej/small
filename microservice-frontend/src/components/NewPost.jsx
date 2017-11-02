@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
 
@@ -8,7 +8,7 @@ function FieldGroup({ id, label, help, ...props }) {
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>
       <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
+         {help && <HelpBlock>{help}</HelpBlock>}
     </FormGroup>
   );
 }
@@ -25,18 +25,22 @@ const NewPost = (props) => {
               <form onSubmit={(event) => props.handleNewPostFormSubmit(event)}>
 
                 <FieldGroup 
+                   name="post_title"
                    id="PostTitle"
                    type="text"
                    label="Title"
                    placeholder="Enter a post title"
                    required
+                   onChange={props.handleFormChange}
                 />
 
                 <FieldGroup
+                   name="post_content"
                    id="formcontrolsTextarea"
                    type="textarea"
                    placeholder="textarea"
                    required
+                   onChange={props.handleFormChange}
                 />
                 
                 <Button type="submit">

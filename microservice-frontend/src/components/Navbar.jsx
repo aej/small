@@ -30,12 +30,6 @@ const NavBar = (props) => (
                 </LinkContainer>
 
                 {props.isAuthenticated &&
-                    <LinkContainer to="/status">
-                      <NavItem eventKey={4}>User Status</NavItem>
-                    </LinkContainer>
-                }
-
-                {props.isAuthenticated &&
                     <LinkContainer to="/new">
                       <NavItem eventKey={4}>New Post</NavItem>
                     </LinkContainer>
