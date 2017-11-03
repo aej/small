@@ -111,9 +111,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.clearLocalStorage();
     this.getUsers();
     this.getPosts();
+    this.getUserStatus();
   }
 
   logoutUser() {
@@ -151,7 +151,7 @@ class App extends Component {
     .then(res => res.json())
     .then((data) => { 
         this.setState({ current_user: data.data });
-
+        this.setState({ isAuthenticated: true })
     })
     .catch((err) => { console.log(err); })
   }
@@ -170,7 +170,10 @@ class App extends Component {
                     <Switch>
 
                         <Route exact path='/' render={() => (
-                          <Home posts={this.state.posts} />
+                          <Home 
+                            posts={this.state.posts} 
+                            users={this.state.users}  
+                            />
                         )} />
 
                         <Route exact path='/about' component={About} />

@@ -4,12 +4,10 @@ I'm attempting to follow the structure on https://testdriven.io
 
 There will be the following microservices as part of this application:
 
-
 1. users - manage users and auth
 2. client - client-side react app
-3. small - application for managing user posts
+3. posts - application for managing user posts
 4. gateway - a reverse proxy for the apis
-
 
 # Tools
 
@@ -17,6 +15,47 @@ There will be the following microservices as part of this application:
 * React
 * Nginx
 * Docker
+
+
+# Environment configuration
+
+This application is production ready. The following environment variables are required for each service.
+```bash
+
+############
+# FRONTEND #
+############
+REACT_APP_USERS_SERVICE_BASE_URL=
+REACT_APP_POSTS_SERVICE_BASE_URL=
+
+############
+# USERS    #
+############
+JWT_SECRET=jwt_secret
+DATABASE_URL=postgres_database_url
+
+############
+# POSTS    #
+############
+DATABASE_URL=
+```
+
+In development simply include the following environment variables
+
+```bash
+############
+# FRONTEND #
+############
+LOCAL_DEV=True
+
+
+#################
+# POSTS & USERS #
+#################
+LOCAL_DEV=True
+SETTINGS_CLASS=LocalConfiguration
+
+```
 
 # TODO:
 
