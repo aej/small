@@ -1,6 +1,6 @@
 Small is a simple blogging application, similar to Medium. It will let users write little blog posts which will all be shared on the main page.
 
-I'm attempting to follow the structure on https://testdriven.io
+I have followed the structure on https://testdriven.io but have not focussed on the tests and have used APIStart rather than Flask.
 
 There will be the following microservices as part of this application:
 
